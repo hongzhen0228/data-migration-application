@@ -2,7 +2,7 @@ package com.data.magration.persist.impl;
 
 import com.data.magration.connector.MySqlConnector;
 import com.data.magration.dto.MysqlThreadData;
-import com.data.magration.persist.MysqlThreadHolder;
+import com.data.magration.common.MysqlThreadHolder;
 import com.data.magration.persist.ConnectionDao;
 import com.data.magration.persist.InfoSchemaDao;
 import org.springframework.util.StringUtils;
@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class ConnectionDaoImpl extends MysqlThreadHolder implements ConnectionDao{
+public class ConnectionDaoImpl implements ConnectionDao{
 
 
     @Override

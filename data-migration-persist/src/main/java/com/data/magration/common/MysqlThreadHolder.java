@@ -1,4 +1,4 @@
-package com.data.magration.persist;
+package com.data.magration.common;
 
 import com.data.magration.dto.MysqlThreadData;
 

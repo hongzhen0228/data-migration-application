@@ -2,7 +2,7 @@ package com.data.magration.persist.impl;
 
 import com.data.magration.dto.MysqlThreadData;
 import com.data.magration.persist.InfoSchemaDao;
-import com.data.magration.persist.MysqlThreadHolder;
+import com.data.magration.common.MysqlThreadHolder;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,7 +15,6 @@ public class InfoSchemaDaoImpl implements InfoSchemaDao {
 
     @Override
     public List<String> qryAllTableNames() throws SQLException {
-        System.out.println(Thread.currentThread().getName());
         List<String> tableNames = new ArrayList<>();
         MysqlThreadData mysqlThreadData = MysqlThreadHolder.getInfo();
         Connection connection = mysqlThreadData.getConnection();
