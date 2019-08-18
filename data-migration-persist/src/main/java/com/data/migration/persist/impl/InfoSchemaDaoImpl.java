@@ -1,8 +1,8 @@
-package com.data.magration.persist.impl;
+package com.data.migration.persist.impl;
 
-import com.data.magration.dto.MysqlThreadData;
-import com.data.magration.persist.InfoSchemaDao;
-import com.data.magration.common.MysqlThreadHolder;
+import com.data.migration.common.MysqlThreadHolder;
+import com.data.migration.persist.InfoSchemaDao;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,14 +11,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class InfoSchemaDaoImpl implements InfoSchemaDao {
 
     @Override
-    public List<String> qryAllTableNames() throws SQLException {
+    public List<String> qryAllTableNames(String type) throws SQLException {
         List<String> tableNames = new ArrayList<>();
-        MysqlThreadData mysqlThreadData = MysqlThreadHolder.getInfo();
-        Connection connection = mysqlThreadData.getConnection();
-        String schema = mysqlThreadData.getSchema();
+        Connection connection = MysqlThreadHolder.getConnection(type);
+        String schema = MysqlThreadHolder.getSchema(type);
         String sql = "select table_name from information_schema.tables where table_schema=" + "\'" + schema + "\'";
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);

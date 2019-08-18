@@ -1,4 +1,4 @@
-package com.data.magration.connector;
+package com.data.migration.connector;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
