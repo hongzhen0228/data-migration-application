@@ -20,4 +20,9 @@ public class DataMigrationServiceImpl implements IDataMigrationService{
     public List<Map<String, String>> qryByLimit(String tableName, String type, Integer start, Integer end) throws SQLException {
         return dataMigrationDao.qryByLimit(tableName, type, start, end);
     }
+
+    @Override
+    public boolean insert(String tableName, String type, List<Map<String, String>> mapList) throws SQLException {
+        return dataMigrationDao.insert(tableName, type, mapList);
+    }
 }

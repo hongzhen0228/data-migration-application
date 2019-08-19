@@ -1,5 +1,6 @@
 package com.data.migration.persist.impl;
 
+import com.data.migration.common.SingletonUtils;
 import com.data.migration.connector.MySqlConnector;
 import com.data.migration.dto.DataStructureDto;
 import com.data.migration.dto.MysqlConnDto;
@@ -32,7 +33,7 @@ public class ConnectionDaoImpl implements ConnectionDao{
             while (resultSet.next()) {
                 String result = resultSet.getString("1");
                 if (!StringUtils.isEmpty(result) && "1".equals(result)) {
-                    MysqlThreadData mysqlThreadData = new MysqlThreadData();
+                    MysqlThreadData mysqlThreadData = SingletonUtils.getMysqlThreadData();
                     mysqlConnDto.setConnection(connection);
                     if (MysqlConnDto.TYPE_MASTER.equals(mysqlConnDto.getType())) {
                         mysqlThreadData.setMasterConnDto(mysqlConnDto);

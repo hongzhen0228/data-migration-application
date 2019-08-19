@@ -28,7 +28,18 @@ public class BaseTest {
         mysqlConnDto.setType(MysqlConnDto.TYPE_MASTER);
         boolean b = connectionService.verifyConnection(mysqlConnDto);
         if (b) {
-            System.out.println("mysql连接成功");
+            System.out.println("主mysql连接成功");
+        }
+        MysqlConnDto mysqlConnDto1 = new MysqlConnDto();
+        mysqlConnDto1.setUrl("rm-wz986i60p423gcku3qo.mysql.rds.aliyuncs.com");
+        mysqlConnDto1.setPassword("Cao8231669@");
+        mysqlConnDto1.setUsername("root");
+        mysqlConnDto1.setSchema("cust");
+        mysqlConnDto1.setPort("3306");
+        mysqlConnDto1.setType(MysqlConnDto.TYPE_HOST);
+        boolean c = connectionService.verifyConnection(mysqlConnDto1);
+        if (c) {
+            System.out.println("从mysql连接成功");
         }
 
     }

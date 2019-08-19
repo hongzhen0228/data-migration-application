@@ -27,4 +27,12 @@ public class InfoSchemaDaoImpl implements InfoSchemaDao {
         }
         return tableNames;
     }
+
+    @Override
+    public boolean dropTable(String type, String tableName) throws SQLException {
+        Connection connection = MysqlThreadHolder.getConnection(type);
+        String sql = "DROP TABLE IF EXISTS " + tableName;
+        Statement statement = connection.createStatement();
+        return statement.execute(sql);
+    }
 }

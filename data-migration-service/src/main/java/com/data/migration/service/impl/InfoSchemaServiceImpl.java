@@ -16,4 +16,9 @@ public class InfoSchemaServiceImpl implements IInfoSchemaService {
     public List<String> qryAllTableNames(String type) throws SQLException {
         return infoSchemaDao.qryAllTableNames(type);
     }
+
+    @Override
+    public boolean dropTable(String type, String tableName) throws SQLException {
+        return infoSchemaDao.dropTable(type, tableName);
+    }
 }

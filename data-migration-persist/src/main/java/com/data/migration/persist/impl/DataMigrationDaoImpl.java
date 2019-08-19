@@ -1,14 +1,13 @@
 package com.data.migration.persist.impl;
 
 import com.data.migration.common.MysqlThreadHolder;
+import com.data.migration.common.SqlBuilder;
 import com.data.migration.persist.DataMigrationDao;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class DataMigrationDaoImpl implements DataMigrationDao {
@@ -31,5 +30,25 @@ public class DataMigrationDaoImpl implements DataMigrationDao {
             mapList.add(paramMap);
         }
         return mapList;
+    }
+
+    @Override
+    public boolean insert(String tableName, String type, List<Map<String, String>> mapList) throws SQLException {
+        Connection connection = MysqlThreadHolder.getConnection(type);
+        if (!CollectionUtils.isEmpty(mapList)) {
+            Map<String, String> keyMap = mapList.get(0);
+            String sql = SqlBuilder.buildInsertSql(keyMap, tableName);
+            for (Map<String, String> dataMap : mapList) {
+                Set<String> keys = dataMap.keySet();
+                for (String key : keys) {
+                    String value = dataMap.get(key);
+                    sql += value +",";
+                }
+                sql = sql.substring(0,sql.length() -1) + "),(";
+            }
+            Statement statement = connection.createStatement();
+            return statement.execute(sql);
+        }
+        return false;
     }
 }

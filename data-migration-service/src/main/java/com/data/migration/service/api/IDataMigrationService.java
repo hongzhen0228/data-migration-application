@@ -11,4 +11,6 @@ public interface IDataMigrationService {
 
     List<Map<String,String>> qryByLimit(String tableName, String type, Integer start, Integer end) throws SQLException;
 
+    boolean insert(String tableName, String type,List<Map<String,String>> mapList) throws SQLException;
+
 }

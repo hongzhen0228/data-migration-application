@@ -7,4 +7,6 @@ public interface IInfoSchemaService {
 
     List<String> qryAllTableNames(String type) throws SQLException;
 
+    boolean dropTable(String type, String tableName) throws SQLException;
+
 }
