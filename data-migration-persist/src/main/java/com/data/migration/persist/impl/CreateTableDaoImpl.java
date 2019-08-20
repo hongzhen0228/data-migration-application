@@ -25,8 +25,16 @@ public class CreateTableDaoImpl implements CreateTableDao {
 
     @Override
     public boolean createTable(String type, String sql) throws SQLException {
-        Connection connection = MysqlThreadHolder.getConnection(type);
-        Statement statement = connection.createStatement();
-        return statement.execute(sql);
+        try {
+            Connection connection = MysqlThreadHolder.getConnection(type);
+            Statement statement = connection.createStatement();
+            int i = statement.executeUpdate(sql);
+            if (i == 1) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

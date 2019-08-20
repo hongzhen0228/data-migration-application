@@ -1,12 +1,17 @@
 package com.data.migration.service;
 
+import com.data.migration.common.MysqlThreadHolder;
 import com.data.migration.dto.MysqlConnDto;
+import com.data.migration.persist.CreateTableDao;
 import com.data.migration.service.api.IDataMigrationService;
 import com.data.migration.service.api.IDataStructureService;
 import com.data.migration.service.api.IInfoSchemaService;
+import com.data.migration.service.api.IMysqlConnectionService;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +25,7 @@ public class DataStructureServiceTest extends BaseTest{
     @Autowired
     private IDataMigrationService dataMigrationService;
     @Autowired
+    private CreateTableDao createTableDao;
     @Test
     public void test() throws SQLException, ClassNotFoundException {
         List<String> strings = infoSchemaService.qryAllTableNames(MysqlConnDto.TYPE_MASTER);
@@ -29,7 +35,12 @@ public class DataStructureServiceTest extends BaseTest{
         if (b) {
             System.out.println("删除成功");
         }
+        String s = createTableDao.qryCreateTableSql(MysqlConnDto.TYPE_MASTER, strings.get(5));
+        boolean b1 = infoSchemaService.dropTable(MysqlConnDto.TYPE_HOST, strings.get(5));
+        boolean table = createTableDao.createTable(MysqlConnDto.TYPE_HOST, s);
         boolean insert = dataMigrationService.insert(strings.get(5), MysqlConnDto.TYPE_HOST, mapList);
         System.out.println(insert);
     }
+
+
 }

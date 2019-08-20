@@ -25,7 +25,13 @@ public class DataMigrationDaoImpl implements DataMigrationDao {
         while (resultSet.next()) {
             Map<String,String> paramMap = new HashMap<>();
             for (int i = 1; i <= columnCount; i++) {
-                paramMap.put(metaData.getColumnLabel(i),resultSet.getString(i));
+                int columnType = metaData.getColumnType(i);
+                if (columnType == Types.INTEGER || columnType == Types.BIGINT || columnType == Types.FLOAT) {
+                    paramMap.put(metaData.getColumnLabel(i),resultSet.getString(i));
+                } else {
+                    paramMap.put(metaData.getColumnLabel(i),"'" + resultSet.getString(i) +"'");
+                }
+
             }
             mapList.add(paramMap);
         }
@@ -46,6 +52,7 @@ public class DataMigrationDaoImpl implements DataMigrationDao {
                 }
                 sql = sql.substring(0,sql.length() -1) + "),(";
             }
+            sql = sql.substring(0,sql.length() - 2);
             Statement statement = connection.createStatement();
             return statement.execute(sql);
         }
