@@ -20,11 +20,13 @@ public class BaseTest {
     @Before
     public void createConn() throws SQLException, ClassNotFoundException {
         MysqlConnDto mysqlConnDto = new MysqlConnDto();
-        mysqlConnDto.setUrl("rm-wz986i60p423gcku3qo.mysql.rds.aliyuncs.com");
-        mysqlConnDto.setPassword("Cao8231669@");
-        mysqlConnDto.setUsername("root");
-        mysqlConnDto.setSchema("db_mblog");
-        mysqlConnDto.setPort("3306");
+        /*db.jdbc.url=jdbc:mysql://134.108.3.250:5114/dev_cpcpdb?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false&maxReconnects=1000&initialTimeout=30
+*/
+        mysqlConnDto.setUrl("134.108.3.250");
+        mysqlConnDto.setPassword("dev_cpcpdb_user_123");
+        mysqlConnDto.setUsername("dev_cpcpdb_user");
+        mysqlConnDto.setSchema("dev_cpcpdb");
+        mysqlConnDto.setPort("5114");
         mysqlConnDto.setType(MysqlConnDto.TYPE_MASTER);
         boolean b = connectionService.verifyConnection(mysqlConnDto);
         if (b) {

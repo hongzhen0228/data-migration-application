@@ -10,7 +10,7 @@ public class MySqlConnector {
 
     private final static String URL_PREFIX = "jdbc:mysql://";
 
-    private final static String URL_SUFFIX = "?useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8";
+    private final static String URL_SUFFIX = "?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false&maxReconnects=1000&initialTimeout=30";
 
     public static Connection getConnection(String url, String username, String password) throws ClassNotFoundException {
         Connection connection = null;

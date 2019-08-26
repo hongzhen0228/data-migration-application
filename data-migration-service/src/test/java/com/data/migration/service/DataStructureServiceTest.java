@@ -1,6 +1,8 @@
 package com.data.migration.service;
 
+import com.data.migration.dto.DataContainer;
 import com.data.migration.dto.MysqlConnDto;
+import com.data.migration.service.api.ICreateTableService;
 import com.data.migration.service.api.IDataMigrationService;
 import com.data.migration.service.api.IDataStructureService;
 import com.data.migration.service.api.IInfoSchemaService;
@@ -20,16 +22,24 @@ public class DataStructureServiceTest extends BaseTest{
     @Autowired
     private IDataMigrationService dataMigrationService;
     @Autowired
+    private ICreateTableService createTableService;
     @Test
     public void test() throws SQLException, ClassNotFoundException {
         List<String> strings = infoSchemaService.qryAllTableNames(MysqlConnDto.TYPE_MASTER);
         //List<DataStructureDto> dataStructureDtoList = dataStructureService.qryDataStructure(strings.get(2), MysqlConnDto.TYPE_MASTER);
-        List<Map<String, String>> mapList = dataMigrationService.qryByLimit(strings.get(5), MysqlConnDto.TYPE_MASTER, 0, 2000);
-        boolean b = infoSchemaService.dropTable(MysqlConnDto.TYPE_HOST, strings.get(5));
+        long start = System.currentTimeMillis();
+        List<DataContainer> dataContainerList = dataMigrationService.qryByLimit("unknown_host", MysqlConnDto.TYPE_MASTER, 0, 2000);
+        boolean b = infoSchemaService.dropTable(MysqlConnDto.TYPE_HOST, "unknown_host");
         if (b) {
             System.out.println("删除成功");
         }
-        boolean insert = dataMigrationService.insert(strings.get(5), MysqlConnDto.TYPE_HOST, mapList);
-        System.out.println(insert);
+        String tableSql = createTableService.qryCreateTableSql(MysqlConnDto.TYPE_MASTER, "unknown_host");
+        createTableService.createTable(MysqlConnDto.TYPE_HOST, tableSql);
+        boolean insert = dataMigrationService.insert("unknown_host", MysqlConnDto.TYPE_HOST, dataContainerList);
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
     }
+
+
+
 }
