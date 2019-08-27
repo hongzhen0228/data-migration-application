@@ -25,4 +25,12 @@ public class MysqlConnDto {
 
     private String type;
 
+    public MysqlConnDto(String url, String username,String password, String schema, String type){
+        this.url = url;
+        this.username = username;
+        this.password = password;
+        this.schema = schema;
+        this.type = type;
+    }
+
 }

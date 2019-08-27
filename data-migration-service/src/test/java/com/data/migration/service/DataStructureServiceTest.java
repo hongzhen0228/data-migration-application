@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 public class DataStructureServiceTest extends BaseTest{
 
@@ -25,17 +24,18 @@ public class DataStructureServiceTest extends BaseTest{
     private ICreateTableService createTableService;
     @Test
     public void test() throws SQLException, ClassNotFoundException {
+        /*-Djava.net.preferIPv4Stack=true*/
         List<String> strings = infoSchemaService.qryAllTableNames(MysqlConnDto.TYPE_MASTER);
         //List<DataStructureDto> dataStructureDtoList = dataStructureService.qryDataStructure(strings.get(2), MysqlConnDto.TYPE_MASTER);
         long start = System.currentTimeMillis();
-        List<DataContainer> dataContainerList = dataMigrationService.qryByLimit("unknown_host", MysqlConnDto.TYPE_MASTER, 0, 2000);
-        boolean b = infoSchemaService.dropTable(MysqlConnDto.TYPE_HOST, "unknown_host");
+        List<DataContainer> dataContainerList = dataMigrationService.qryByLimit("eg_rule", MysqlConnDto.TYPE_MASTER, 0, 2000);
+        boolean b = infoSchemaService.dropTable(MysqlConnDto.TYPE_HOST, "eg_rule");
         if (b) {
             System.out.println("删除成功");
         }
-        String tableSql = createTableService.qryCreateTableSql(MysqlConnDto.TYPE_MASTER, "unknown_host");
+        String tableSql = createTableService.qryCreateTableSql(MysqlConnDto.TYPE_MASTER, "eg_rule");
         createTableService.createTable(MysqlConnDto.TYPE_HOST, tableSql);
-        boolean insert = dataMigrationService.insert("unknown_host", MysqlConnDto.TYPE_HOST, dataContainerList);
+        boolean insert = dataMigrationService.insert("eg_rule", MysqlConnDto.TYPE_HOST, dataContainerList);
         long end = System.currentTimeMillis();
         System.out.println(end - start);
     }
