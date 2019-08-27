@@ -33,4 +33,6 @@ public class MysqlConnDto {
         this.type = type;
     }
 
+    public MysqlConnDto() {
+    }
 }
