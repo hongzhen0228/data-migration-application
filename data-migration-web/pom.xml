@@ -53,6 +53,11 @@
             <artifactId>data-migration-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.data.magration.persist</groupId>
+            <artifactId>data-migration-persist</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
 
     </dependencies>
